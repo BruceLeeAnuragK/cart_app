@@ -10,33 +10,38 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     CartController controller = Get.find();
 
-    return CustomScrollView(
-      slivers: <Widget>[
-        SliverAppBar(
-          leading: IconButton(
-            icon: Icon(
-              Icons.arrow_back_ios_new_sharp,
-              color: Colors.white,
+    return Scaffold(
+      body: CustomScrollView(
+        slivers: <Widget>[
+          SliverAppBar(
+            leading: IconButton(
+              icon: Icon(
+                Icons.arrow_back_ios_new_sharp,
+                color: Colors.white,
+              ),
+              onPressed: () {
+                Get.back();
+              },
             ),
-            onPressed: () {},
-          ),
-          actions: [Badge()],
-          expandedHeight: 200.0,
-          flexibleSpace: FlexibleSpaceBar(
-            title: Text("Cart App"),
-            centerTitle: true,
-            background: Image.network(
-              "https://img.freepik.com/premium-photo/blue-shopping-bag-blue-background-top-view_93675-84297.jpg",
-              fit: BoxFit.cover,
+            expandedHeight: 200.0,
+            flexibleSpace: FlexibleSpaceBar(
+              title: Text("Cart App"),
+              centerTitle: true,
+              background: Image.network(
+                "https://img.freepik.com/premium-photo/blue-shopping-bag-blue-background-top-view_93675-84297.jpg",
+                fit: BoxFit.cover,
+              ),
             ),
           ),
-        ),
-        SliverList(
-          delegate: SliverChildBuilderDelegate(
-            (context, index) => Card(),
+          SliverList(
+            delegate: SliverChildBuilderDelegate(
+              (context, index) => Card(
+                child: ListTile(),
+              ),
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

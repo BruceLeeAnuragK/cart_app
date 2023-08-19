@@ -8,11 +8,10 @@ class LogIn extends StatelessWidget {
   final usernameController = TextEditingController();
   final emailController = TextEditingController();
 
+  GlobalKey<FormState> loginKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
-    String user = "";
-    String Email = "";
-
     return Scaffold(
       body: Column(
         children: [
@@ -61,13 +60,15 @@ class LogIn extends StatelessWidget {
                     ),
                   ),
                   Form(
+                    key: loginKey,
                     child: Column(
                       children: [
                         Padding(
                           padding: const EdgeInsets.all(15),
                           child: TextFormField(
                             controller: usernameController,
-                            onChanged: (value) {},
+                            validator: (val) =>
+                                val!.isEmpty ? "Enter UserName" : null,
                             decoration: InputDecoration(
                                 enabledBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
@@ -92,7 +93,8 @@ class LogIn extends StatelessWidget {
                           padding: const EdgeInsets.all(15),
                           child: TextFormField(
                             controller: emailController,
-                            onChanged: (value) {},
+                            validator: (val) =>
+                                val!.isEmpty ? "Enter Email" : null,
                             decoration: InputDecoration(
                               enabledBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
@@ -128,8 +130,12 @@ class LogIn extends StatelessWidget {
                     color: Colors.blue.shade900,
                     onPressed: () {
                       Get.toNamed("/HomePage");
-                      controller.username = usernameController.text.obs;
-                      controller.email = emailController.text.obs;
+                      if (loginKey.currentState!.validate()) {
+                        controller.OnSubmit(
+                            usernameController.text, emailController.text);
+                        usernameController.clear();
+                        emailController.clear();
+                      }
                     },
                     child: Text(
                       "Submit",
@@ -140,8 +146,16 @@ class LogIn extends StatelessWidget {
                       ),
                     ),
                   ),
-                  Text("name ${controller.username.value}.."),
-                  Text("last ${controller.email.value}.."),
+                  // Obx(
+                  //   () => Text("name : ${controller.username.value}"),
+                  // ),
+                  // Obx(
+                  //   () => Text("last : ${controller.email.value}"),
+                  // ),
+                  Text(
+                      "User Name : ${CartController.storage.read("userName") ?? ""}"),
+                  Text(
+                      " Email : ${CartController.storage.read("email") ?? ""}"),
                 ],
               ),
             ),
