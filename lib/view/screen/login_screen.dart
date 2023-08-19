@@ -67,34 +67,50 @@ class LogIn extends StatelessWidget {
                           padding: const EdgeInsets.all(15),
                           child: TextFormField(
                             controller: usernameController,
-                            validator: (val) =>
-                                val!.isEmpty ? "Enter UserName" : null,
+                            keyboardType: TextInputType.name,
+                            validator: (val) {
+                              if (val!.isEmpty) {
+                                "Enter the User name.";
+                              } else if (val.length > 6) {
+                                "Enter only 6 digit username.";
+                              } else {
+                                "";
+                              }
+                            },
                             decoration: InputDecoration(
-                                enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Colors.blue.shade900,
-                                  ),
-                                ),
-                                prefixIcon: Icon(
-                                  Icons.person,
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
                                   color: Colors.blue.shade900,
                                 ),
-                                suffixIconColor: Colors.blue,
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                  borderSide: BorderSide(
-                                    color: Colors.blue,
-                                    width: 3,
-                                  ),
-                                )),
+                              ),
+                              prefixIcon: Icon(
+                                Icons.person,
+                                color: Colors.blue.shade900,
+                              ),
+                              suffixIconColor: Colors.blue,
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
+                                borderSide: BorderSide(
+                                  color: Colors.blue,
+                                  width: 3,
+                                ),
+                              ),
+                            ),
                           ),
                         ),
                         Padding(
                           padding: const EdgeInsets.all(15),
                           child: TextFormField(
                             controller: emailController,
-                            validator: (val) =>
-                                val!.isEmpty ? "Enter Email" : null,
+                            validator: (val) {
+                              if (val!.isEmpty) {
+                                "Enter the your Email here.";
+                              } else if (val.length > 6) {
+                                "Enter only 6 digit username";
+                              } else {
+                                "";
+                              }
+                            },
                             decoration: InputDecoration(
                               enabledBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
@@ -135,6 +151,8 @@ class LogIn extends StatelessWidget {
                             usernameController.text, emailController.text);
                         usernameController.clear();
                         emailController.clear();
+                      } else {
+                        "not saved";
                       }
                     },
                     child: Text(
