@@ -1,7 +1,7 @@
-import 'package:cart_app/helper/api_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../helper/api_helper.dart';
 import '../../provider/cartController.dart';
 
 class HomePage extends StatelessWidget {
@@ -51,48 +51,51 @@ class HomePage extends StatelessWidget {
               ),
             ),
           ),
-          Padding(
+          SliverPadding(
             padding: const EdgeInsets.all(8.0),
-            child: Column(
-              children: [
-                FutureBuilder(
-                  future: APIHelper.apiHelper.getData(),
-                  builder: (context, snapShot) {
-                    if (snapShot.hasData) {
-                      return SliverGrid.builder(
-                        itemCount: 3,
-                        itemBuilder: (context, index) => Card(
-                          child: Column(
-                            children: [
-                              Container(
-                                height: 200,
-                                width: 100,
-                                decoration: BoxDecoration(
-                                  color: Colors.blue,
-                                  image: DecorationImage(
-                                    image: NetworkImage(""),
+            sliver: SliverFillRemaining(
+              child: Column(
+                children: [
+                  FutureBuilder(
+                    future: APIHelper.apiHelper.getData(),
+                    builder: (context, snapShot) {
+                      if (snapShot.hasData) {
+                        return SliverGrid.builder(
+                          itemCount: 3,
+                          itemBuilder: (context, index) => Card(
+                            child: Column(
+                              children: [
+                                Container(
+                                  height: 200,
+                                  width: 100,
+                                  decoration: BoxDecoration(
+                                    color: Colors.blue,
+                                    image: DecorationImage(
+                                      image: NetworkImage(""),
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
-                        ),
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                        ),
-                      );
-                    } else if (snapShot.hasError) {
-                      return Text("${snapShot.hasError}");
-                    } else {
-                      return Center(
-                        child: CircularProgressIndicator(
-                          color: Colors.blue.shade900,
-                        ),
-                      );
-                    }
-                  },
-                ),
-              ],
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                          ),
+                        );
+                      } else if (snapShot.hasError) {
+                        return Text("${snapShot.hasError}");
+                      } else {
+                        return Center(
+                          child: CircularProgressIndicator(
+                            color: Colors.blue.shade900,
+                          ),
+                        );
+                      }
+                    },
+                  ),
+                ],
+              ),
             ),
           ),
         ],

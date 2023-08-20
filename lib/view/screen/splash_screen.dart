@@ -1,5 +1,5 @@
 import 'package:animated_splash_screen/animated_splash_screen.dart';
-import 'package:cart_app/view/screen/home_page.dart';
+import 'package:cart_app/view/screen/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -15,7 +15,7 @@ class SplashScreen extends StatelessWidget {
             Text(
               "Buy Your choice",
               style: GoogleFonts.greatVibes(
-                color: Colors.black,
+                color: Colors.blue.shade900,
                 fontWeight: FontWeight.bold,
                 fontSize: 30,
               ),
@@ -24,8 +24,8 @@ class SplashScreen extends StatelessWidget {
           ],
         ),
       ),
-      nextScreen: HomePage(),
-      duration: 40000,
+      nextScreen: LogIn(),
+      duration: 4000,
     );
   }
 }

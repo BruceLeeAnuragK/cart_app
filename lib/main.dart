@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
         GetPage(
           name: "/",
           page: () => StorageHelper.storageHelper.isFirstItem
-              ? const SplashScreen()
+              ? SplashScreen()
               : LogIn(),
         ),
         GetPage(
