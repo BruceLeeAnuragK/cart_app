@@ -34,6 +34,8 @@ dependencies:
   badges:
   dio:
   get_storage:
+  animated_splash_screen:
+  google_fonts:
 
 
 dev_dependencies:

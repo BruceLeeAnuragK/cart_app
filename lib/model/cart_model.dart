@@ -12,6 +12,7 @@ class Product {
   String category;
   String thumbnail;
   List<String> images;
+  RxInt qty = 1.obs;
 
   Product({
     required this.id,
@@ -25,6 +26,7 @@ class Product {
     required this.category,
     required this.thumbnail,
     required this.images,
+    required this.qty,
   });
 
   factory Product.fromMap({required Map data}) => Product(
@@ -38,6 +40,7 @@ class Product {
         brand: data["brand"],
         category: data["category"],
         thumbnail: data["thumbnail"],
+        qty: data["qty"],
         images: List<String>.from(data["images"].map((x) => x)),
       );
 }

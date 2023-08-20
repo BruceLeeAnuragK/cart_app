@@ -1,5 +1,7 @@
+import 'package:cart_app/helper/splash_screen_helper.dart';
 import 'package:cart_app/view/screen/home_page.dart';
 import 'package:cart_app/view/screen/login_screen.dart';
+import 'package:cart_app/view/screen/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -24,8 +26,16 @@ class MyApp extends StatelessWidget {
       ),
       title: "Cart App",
       getPages: [
-        GetPage(name: "/", page: () => LogIn()),
-        GetPage(name: "/HomePage", page: () => HomePage()),
+        GetPage(
+          name: "/",
+          page: () => StorageHelper.storageHelper.isFirstItem
+              ? const SplashScreen()
+              : LogIn(),
+        ),
+        GetPage(
+          name: "/HomePage",
+          page: () => HomePage(),
+        ),
       ],
     );
   }
