@@ -12,7 +12,7 @@ class Product {
   String category;
   String thumbnail;
   List<String> images;
-  RxInt qty = 1.obs;
+  static RxInt qty = 0.obs;
 
   Product({
     required this.id,
@@ -26,23 +26,23 @@ class Product {
     required this.category,
     required this.thumbnail,
     required this.images,
-    required this.qty,
   });
 
-  factory Product.fromMap({required Map data}) => Product(
-        id: data["id"],
-        title: data["title"],
-        description: data["description"],
-        price: data["price"],
-        discountPercentage: data["discountPercentage"]?.toDouble(),
-        rating: data["rating"]?.toDouble(),
-        stock: data["stock"],
-        brand: data["brand"],
-        category: data["category"],
-        thumbnail: data["thumbnail"],
-        qty: data["qty"],
-        images: List<String>.from(data["images"].map((x) => x)),
-      );
+  factory Product.fromMap({required Map data}) {
+    return Product(
+      id: data["id"],
+      title: data["title"],
+      description: data["description"],
+      price: data["price"],
+      discountPercentage: data["discountPercentage"]?.toDouble(),
+      rating: data["rating"]?.toDouble(),
+      stock: data["stock"],
+      brand: data["brand"],
+      category: data["category"],
+      thumbnail: data["thumbnail"],
+      images: List<String>.from(data["images"].map((x) => x)),
+    );
+  }
 }
 
 class Counter {

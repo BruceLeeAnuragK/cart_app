@@ -1,6 +1,7 @@
+import 'package:badges/badges.dart';
+import 'package:cart_app/model/cart_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import '../../helper/api_helper.dart';
 import '../../provider/cartController.dart';
 
@@ -17,9 +18,7 @@ class HomePage extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(10),
                 child: Badge(
-                  backgroundColor: Colors.blue.shade400,
-                  label: Text("3"),
-                  textColor: Colors.blue.shade900,
+                  badgeContent: Text("${controller.cartitems.length}"),
                   child: IconButton(
                     onPressed: () {},
                     icon: Icon(
@@ -60,31 +59,43 @@ class HomePage extends StatelessWidget {
                     future: APIHelper.apiHelper.getData(),
                     builder: (context, snapShot) {
                       if (snapShot.hasData) {
-                        return SliverGrid.builder(
-                          itemCount: 3,
-                          itemBuilder: (context, index) => Card(
-                            child: Column(
-                              children: [
-                                Container(
-                                  height: 200,
-                                  width: 100,
-                                  decoration: BoxDecoration(
-                                    color: Colors.blue,
-                                    image: DecorationImage(
-                                      image: NetworkImage(""),
+                        return Expanded(
+                          child: GridView.builder(
+                              itemCount: snapShot.data!.length,
+                              gridDelegate:
+                                  SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 2,
+                                crossAxisSpacing: 15,
+                                mainAxisSpacing: 10,
+                              ),
+                              itemBuilder: (context, index) {
+                                return Column(
+                                  children: [
+                                    Expanded(
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          border: Border.all(
+                                            color: Colors.black,
+                                            width: 2,
+                                          ),
+                                          image: DecorationImage(
+                                            fit: BoxFit.cover,
+                                            image: NetworkImage(snapShot
+                                                .data![index].thumbnail),
+                                          ),
+                                        ),
+                                      ),
                                     ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                          ),
+                                    Text(snapShot.data![index].title),
+                                    Text(snapShot.data![index].brand),
+                                  ],
+                                );
+                              }),
                         );
                       } else if (snapShot.hasError) {
-                        return Text("${snapShot.hasError}");
+                        return Text("error ${snapShot.hasError}");
                       } else {
                         return Center(
                           child: CircularProgressIndicator(

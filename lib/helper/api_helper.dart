@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
 
 import '../model/cart_model.dart';
@@ -5,7 +7,7 @@ import '../model/cart_model.dart';
 class APIHelper {
   APIHelper._();
   static final APIHelper apiHelper = APIHelper._();
-  String api = "https://dummyjson.com/products?limit=100";
+  String api = "https://dummyjson.com/products";
 
   Dio dio = Dio();
   Future<List<Product>?> getData() async {

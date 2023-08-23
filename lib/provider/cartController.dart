@@ -25,10 +25,12 @@ class CartController extends GetxController {
     cartitems.remove(product);
   }
 
-  changeOty({required int val, required int index}) {
-    cartitems[index].qty += val;
-    if (cartitems[index].qty < 1) {
-      cartitems.removeAt(index);
-    }
-  }
+  // changeOty({required int val, required int index}) {
+  //   if (cartitems[index].qty != null) {
+  //     cartitems[index].qty += val;
+  //     if (cartitems[index].qty < 1) {
+  //       cartitems.removeAt(index);
+  //     }
+  //   }
+  // }
 }
