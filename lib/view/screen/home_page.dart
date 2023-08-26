@@ -1,7 +1,8 @@
-import 'package:badges/badges.dart';
 import 'package:cart_app/model/cart_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
+
 import '../../helper/api_helper.dart';
 import '../../provider/cartController.dart';
 
@@ -18,7 +19,7 @@ class HomePage extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(10),
                 child: Badge(
-                  badgeContent: Text("${controller.cartitems.length}"),
+                  label: Text("${controller.cartitems.length}"),
                   child: IconButton(
                     onPressed: () {},
                     icon: Icon(
@@ -42,7 +43,10 @@ class HomePage extends StatelessWidget {
             expandedHeight: 200.0,
             floating: true,
             flexibleSpace: FlexibleSpaceBar(
-              title: Text("Cart App"),
+              title: Text(
+                "Cart App",
+                style: GoogleFonts.sofia(),
+              ),
               centerTitle: true,
               background: Image.network(
                 "https://img.freepik.com/premium-photo/blue-shopping-bag-blue-background-top-view_93675-84297.jpg",
@@ -68,29 +72,70 @@ class HomePage extends StatelessWidget {
                                 crossAxisSpacing: 15,
                                 mainAxisSpacing: 10,
                               ),
-                              itemBuilder: (context, indexes) {
-                                return Column(
-                                  children: [
-                                    Expanded(
-                                      child: Container(
+                              itemBuilder: (context, index) {
+                                Product product = snapShot.data![index];
+                                return Card(
+                                  child: Column(
+                                    children: [
+                                      Container(
+                                        height: 70,
                                         decoration: BoxDecoration(
                                           borderRadius:
                                               BorderRadius.circular(10),
-                                          border: Border.all(
-                                            color: Colors.black,
-                                            width: 2,
-                                          ),
                                           image: DecorationImage(
                                             fit: BoxFit.cover,
-                                            image: NetworkImage(snapShot
-                                                .data![indexes].thumbnail),
+                                            image:
+                                                NetworkImage(product.thumbnail),
                                           ),
                                         ),
                                       ),
-                                    ),
-                                    Text(snapShot.data![indexes].title),
-                                    Text(snapShot.data![indexes].brand),
-                                  ],
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Expanded(
+                                            flex: 3,
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  product.title,
+                                                  style: TextStyle(
+                                                    color: Colors.blue.shade900,
+                                                    fontSize: 10,
+                                                  ),
+                                                ),
+                                                Text(
+                                                  product.brand,
+                                                  style: TextStyle(
+                                                    color: Colors.blue,
+                                                    fontSize: 8,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          Expanded(
+                                            child: Container(
+                                              height: 50,
+                                              width: 50,
+                                              child: IconButton(
+                                                onPressed: () {
+                                                  controller.addToCart(
+                                                      product: product);
+                                                },
+                                                icon: Icon(
+                                                  Icons.shopping_cart,
+                                                  color: Colors.blue.shade900,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
                                 );
                               }),
                         );
