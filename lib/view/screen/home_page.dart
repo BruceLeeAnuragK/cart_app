@@ -68,7 +68,7 @@ class HomePage extends StatelessWidget {
                                 crossAxisSpacing: 15,
                                 mainAxisSpacing: 10,
                               ),
-                              itemBuilder: (context, index) {
+                              itemBuilder: (context, indexes) {
                                 return Column(
                                   children: [
                                     Expanded(
@@ -83,13 +83,13 @@ class HomePage extends StatelessWidget {
                                           image: DecorationImage(
                                             fit: BoxFit.cover,
                                             image: NetworkImage(snapShot
-                                                .data![index].thumbnail),
+                                                .data![indexes].thumbnail),
                                           ),
                                         ),
                                       ),
                                     ),
-                                    Text(snapShot.data![index].title),
-                                    Text(snapShot.data![index].brand),
+                                    Text(snapShot.data![indexes].title),
+                                    Text(snapShot.data![indexes].brand),
                                   ],
                                 );
                               }),
