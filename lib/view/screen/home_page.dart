@@ -18,17 +18,19 @@ class HomePage extends StatelessWidget {
             actions: [
               Padding(
                 padding: const EdgeInsets.all(10),
-                child: Badge(
-                  label: Text("${controller.cartitems.length}"),
-                  child: IconButton(
-                    onPressed: () {},
-                    icon: Icon(
-                      Icons.shopping_cart_rounded,
-                      color: Colors.white,
-                      size: 30,
+                child: Obx(() {
+                  return Badge(
+                    label: Text("${controller.cartitems.length}"),
+                    child: IconButton(
+                      onPressed: () {},
+                      icon: Icon(
+                        Icons.shopping_cart_rounded,
+                        color: Colors.white,
+                        size: 30,
+                      ),
                     ),
-                  ),
-                ),
+                  );
+                }),
               ),
             ],
             leading: IconButton(

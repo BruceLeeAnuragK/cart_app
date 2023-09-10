@@ -51,7 +51,7 @@ class LogIn extends StatelessWidget {
                   ),
                   Center(
                     child: Text(
-                      "you will get your foods within 30mins.",
+                      "you will get your product within 30mins.",
                       style: TextStyle(
                         color: Colors.blue.shade100,
                         fontSize: 10,
