@@ -1,16 +1,23 @@
 import 'package:cart_app/helper/splash_screen_helper.dart';
 import 'package:cart_app/view/screen/cart_page.dart';
 import 'package:cart_app/view/screen/detail_page.dart';
+import 'package:cart_app/view/screen/favourite_page.dart';
 import 'package:cart_app/view/screen/home_page.dart';
 import 'package:cart_app/view/screen/login_screen.dart';
 import 'package:cart_app/view/screen/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await GetStorage.init();
+
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(
     const MyApp(),
   );
@@ -45,6 +52,10 @@ class MyApp extends StatelessWidget {
         GetPage(
           name: "/ItemDetailPage",
           page: () => ItemDetailPage(),
+        ),
+        GetPage(
+          name: "/FavoiritePage",
+          page: () => FavoiritePage(),
         ),
       ],
     );

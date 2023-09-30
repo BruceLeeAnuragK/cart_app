@@ -18,7 +18,33 @@ class HomePage extends StatelessWidget {
           SliverAppBar(
             actions: [
               Padding(
-                padding: const EdgeInsets.all(10),
+                padding: const EdgeInsets.all(1),
+                child: IconButton(
+                  onPressed: () {
+                    Get.toNamed("/CartPage");
+                  },
+                  icon: Icon(
+                    Icons.person_4_rounded,
+                    color: Colors.white,
+                    size: 20,
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(1),
+                child: IconButton(
+                  onPressed: () {
+                    Get.toNamed("/FavoiritePage");
+                  },
+                  icon: Icon(
+                    Icons.favorite_outlined,
+                    color: Colors.white,
+                    size: 20,
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(1),
                 child: Obx(() {
                   return Badge(
                     label: Text("${controller.cartitems.length}"),
@@ -29,7 +55,7 @@ class HomePage extends StatelessWidget {
                       icon: Icon(
                         Icons.shopping_cart_rounded,
                         color: Colors.white,
-                        size: 30,
+                        size: 20,
                       ),
                     ),
                   );
@@ -68,7 +94,9 @@ class HomePage extends StatelessWidget {
                     children: [
                       ElevatedButton(
                         onPressed: () {
-                          controller.cartitems.sort();
+                          controller.cartitems.sort((a, b) {
+                            return a.brand.compareTo(b.brand);
+                          });
                         },
                         child: Text(
                           "A-Z",
@@ -79,7 +107,9 @@ class HomePage extends StatelessWidget {
                       ),
                       ElevatedButton(
                         onPressed: () {
-                          controller.cartitems.reversed;
+                          controller.cartitems.sort((a, b) {
+                            return b.brand.compareTo(a.brand);
+                          });
                         },
                         child: Text(
                           "Z-A",
@@ -100,6 +130,7 @@ class HomePage extends StatelessWidget {
                         ),
                       ),
                     ],
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   ),
                   FutureBuilder(
                     future: APIHelper.apiHelper.getData(),
