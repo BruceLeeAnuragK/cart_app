@@ -7,6 +7,7 @@ class ItemDetailPage extends StatelessWidget {
   ItemDetailPage({Key? key}) : super(key: key);
 
   CartController controller = Get.find();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,7 +23,9 @@ class ItemDetailPage extends StatelessWidget {
             Icons.arrow_back_ios,
             color: Colors.white,
           ),
-          onPressed: () {},
+          onPressed: () {
+            Get.back();
+          },
         ),
       ),
       body: ListView.builder(

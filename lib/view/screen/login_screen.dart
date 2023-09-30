@@ -2,6 +2,9 @@ import 'package:cart_app/provider/cartController.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../helper/firestore_helper.dart';
+import '../../model/user_model.dart';
+
 class LogIn extends StatelessWidget {
   LogIn({Key? key}) : super(key: key);
   CartController controller = Get.put(CartController());
@@ -101,7 +104,6 @@ class LogIn extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.all(15),
                           child: TextFormField(
-
                             controller: emailController,
                             validator: (val) {
                               if (val!.isEmpty) {
@@ -145,7 +147,13 @@ class LogIn extends StatelessWidget {
                       ),
                     ),
                     color: Colors.blue.shade900,
-                    onPressed: () {
+                    onPressed: () async {
+                      await FireStoreHelper.storeHelper.addUser(
+                        userModel: UserModel(
+                          username: usernameController.text,
+                          email: emailController.text,
+                        ),
+                      );
                       Get.toNamed("/HomePage");
                       if (loginKey.currentState!.validate()) {
                         controller.OnSubmit(
