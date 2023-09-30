@@ -9,6 +9,9 @@ import '../../provider/cartController.dart';
 class HomePage extends StatelessWidget {
   HomePage({Key? key}) : super(key: key);
   CartController controller = Get.put(CartController());
+  TextEditingController searchController = TextEditingController();
+
+  void filterSearchResults() {}
 
   @override
   Widget build(BuildContext context) {
@@ -90,47 +93,133 @@ class HomePage extends StatelessWidget {
             sliver: SliverFillRemaining(
               child: Column(
                 children: [
+                  TextField(
+                    onChanged: (val) {
+                      controller.updateSearchQuery(val);
+                    },
+                    decoration: InputDecoration(
+                      hintText: "Search...",
+                      hintStyle: TextStyle(
+                        color: Colors.blue.shade900,
+                      ),
+                      suffixIcon: Icon(
+                        Icons.search,
+                        color: Colors.blue.shade900,
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20),
+                        borderSide:
+                            BorderSide(color: Colors.blue.shade900, width: 1),
+                      ),
+                    ),
+                  ),
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      ElevatedButton(
-                        onPressed: () {
-                          controller.cartitems.sort((a, b) {
-                            return a.brand.compareTo(b.brand);
-                          });
-                        },
-                        child: Text(
-                          "A-Z",
-                          style: TextStyle(
-                            color: Colors.blue.shade900,
+                      Column(
+                        children: [
+                          Row(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(8.5),
+                                child: ElevatedButton(
+                                  onPressed: () {
+                                    controller.cartitems.sort((a, b) {
+                                      return a.brand.compareTo(b.brand);
+                                    });
+                                  },
+                                  child: Text(
+                                    "A-Z",
+                                    style: TextStyle(
+                                      color: Colors.blue.shade900,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(5.0),
+                                child: ElevatedButton(
+                                  onPressed: () {
+                                    controller.cartitems.sort((a, b) {
+                                      return b.brand.compareTo(a.brand);
+                                    });
+                                  },
+                                  child: Text(
+                                    "Z-A",
+                                    style: TextStyle(
+                                      color: Colors.blue.shade900,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
-                        ),
+                          Text(
+                            "By Brand Name :",
+                            style: TextStyle(
+                                color: Colors.blue.shade900, fontSize: 10),
+                          ),
+                        ],
                       ),
-                      ElevatedButton(
-                        onPressed: () {
-                          controller.cartitems.sort((a, b) {
-                            return b.brand.compareTo(a.brand);
-                          });
-                        },
-                        child: Text(
-                          "Z-A",
-                          style: TextStyle(
-                            color: Colors.blue.shade900,
+                      Spacer(),
+                      Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Column(
+                                children: [
+                                  Row(
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.all(5.0),
+                                        child: ElevatedButton(
+                                          onPressed: () {
+                                            controller.cartitems.sort((a, b) {
+                                              return a.category
+                                                  .compareTo(b.category);
+                                            });
+                                          },
+                                          child: Text(
+                                            "A-Z",
+                                            style: TextStyle(
+                                              color: Colors.blue.shade900,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.all(5.0),
+                                        child: ElevatedButton(
+                                          onPressed: () {
+                                            controller.cartitems.sort((a, b) {
+                                              return b.category
+                                                  .compareTo(a.category);
+                                            });
+                                          },
+                                          child: Text(
+                                            "Z-A",
+                                            style: TextStyle(
+                                              color: Colors.blue.shade900,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  Text(
+                                    "By Category Name :",
+                                    style: TextStyle(
+                                        color: Colors.blue.shade900,
+                                        fontSize: 10),
+                                  ),
+                                ],
+                              ),
+                            ],
                           ),
-                        ),
-                      ),
-                      ElevatedButton(
-                        onPressed: () {
-                          controller.cartitems.reversed;
-                        },
-                        child: Text(
-                          "Z-A",
-                          style: TextStyle(
-                            color: Colors.blue.shade900,
-                          ),
-                        ),
+                        ],
                       ),
                     ],
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   ),
                   FutureBuilder(
                     future: APIHelper.apiHelper.getData(),

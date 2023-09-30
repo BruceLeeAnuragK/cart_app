@@ -38,6 +38,9 @@ dependencies:
   google_fonts:
   dynamic_badges:
   firebase_core:
+  firebase_storage:
+  firebase_auth:
+  cloud_firestore:
 
 
 dev_dependencies:
