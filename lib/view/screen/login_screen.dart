@@ -101,6 +101,7 @@ class LogIn extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.all(15),
                           child: TextFormField(
+
                             controller: emailController,
                             validator: (val) {
                               if (val!.isEmpty) {

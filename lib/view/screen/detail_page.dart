@@ -7,7 +7,11 @@ class ItemDetailPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: Column(),
+      body: Column(
+        children: [
+
+        ],
+      ),
     );
   }
 }

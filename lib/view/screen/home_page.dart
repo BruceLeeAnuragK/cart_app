@@ -22,9 +22,29 @@ class HomePage extends StatelessWidget {
                   return Badge(
                     label: Text("${controller.cartitems.length}"),
                     child: IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Get.toNamed("/CartPage");
+                      },
                       icon: Icon(
                         Icons.shopping_cart_rounded,
+                        color: Colors.white,
+                        size: 30,
+                      ),
+                    ),
+                  );
+                }),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(10),
+                child: Obx(() {
+                  return Badge(
+                    label: Text("${controller.cartitems.length}"),
+                    child: IconButton(
+                      onPressed: () {
+                        Get.toNamed("/CartPage");
+                      },
+                      icon: Icon(
+                        Icons.sort,
                         color: Colors.white,
                         size: 30,
                       ),
@@ -79,6 +99,7 @@ class HomePage extends StatelessWidget {
                                 return Card(
                                   child: Column(
                                     children: [
+
                                       Container(
                                         height: 70,
                                         decoration: BoxDecoration(
@@ -91,6 +112,7 @@ class HomePage extends StatelessWidget {
                                           ),
                                         ),
                                       ),
+
                                       Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
@@ -118,18 +140,36 @@ class HomePage extends StatelessWidget {
                                               ],
                                             ),
                                           ),
+                                          Expanded(child: CircleAvatar(
+                                            backgroundColor: Colors.white,
+
+                                            child: IconButton(
+                                              icon: Icon(Icons.favorite,size: 20,color: Colors.blue.shade900,),
+                                              onPressed: (){},
+                                            ),
+                                          )),
+                                        ],
+                                      ),
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                        children: [
                                           Expanded(
-                                            child: Container(
-                                              height: 50,
-                                              width: 50,
-                                              child: IconButton(
-                                                onPressed: () {
-                                                  controller.addToCart(
-                                                      product: product);
-                                                },
-                                                icon: Icon(
-                                                  Icons.shopping_cart,
-                                                  color: Colors.blue.shade900,
+                                            child: Padding(
+                                              padding: const EdgeInsets.only(bottom: 10),
+                                              child: Container(
+                                                height: 30,
+                                                width: 30,
+                                                child: IconButton(
+                                                  onPressed: () {
+                                                    controller.addToCart(
+                                                        product: product);
+                                                  },
+                                                  icon: Icon(
+                                                    Icons.shopping_cart,
+                                                    color: Colors.blue.shade900,
+                                                    size: 30,
+                                                  ),
                                                 ),
                                               ),
                                             ),
@@ -139,7 +179,7 @@ class HomePage extends StatelessWidget {
                                     ],
                                   ),
                                 );
-                              }),
+                              },),
                         );
                       } else if (snapShot.hasError) {
                         return Text("error ${snapShot.hasError}");
