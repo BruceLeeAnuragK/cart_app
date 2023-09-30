@@ -9,6 +9,7 @@ import '../../provider/cartController.dart';
 class HomePage extends StatelessWidget {
   HomePage({Key? key}) : super(key: key);
   CartController controller = Get.put(CartController());
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,24 +28,6 @@ class HomePage extends StatelessWidget {
                       },
                       icon: Icon(
                         Icons.shopping_cart_rounded,
-                        color: Colors.white,
-                        size: 30,
-                      ),
-                    ),
-                  );
-                }),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(10),
-                child: Obx(() {
-                  return Badge(
-                    label: Text("${controller.cartitems.length}"),
-                    child: IconButton(
-                      onPressed: () {
-                        Get.toNamed("/CartPage");
-                      },
-                      icon: Icon(
-                        Icons.sort,
                         color: Colors.white,
                         size: 30,
                       ),
@@ -81,26 +64,66 @@ class HomePage extends StatelessWidget {
             sliver: SliverFillRemaining(
               child: Column(
                 children: [
+                  Row(
+                    children: [
+                      ElevatedButton(
+                        onPressed: () {
+                          controller.cartitems.sort();
+                        },
+                        child: Text(
+                          "A-Z",
+                          style: TextStyle(
+                            color: Colors.blue.shade900,
+                          ),
+                        ),
+                      ),
+                      ElevatedButton(
+                        onPressed: () {
+                          controller.cartitems.reversed;
+                        },
+                        child: Text(
+                          "Z-A",
+                          style: TextStyle(
+                            color: Colors.blue.shade900,
+                          ),
+                        ),
+                      ),
+                      ElevatedButton(
+                        onPressed: () {
+                          controller.cartitems.reversed;
+                        },
+                        child: Text(
+                          "Z-A",
+                          style: TextStyle(
+                            color: Colors.blue.shade900,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                   FutureBuilder(
                     future: APIHelper.apiHelper.getData(),
                     builder: (context, snapShot) {
                       if (snapShot.hasData) {
                         return Expanded(
                           child: GridView.builder(
-                              itemCount: snapShot.data!.length,
-                              gridDelegate:
-                                  SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 2,
-                                crossAxisSpacing: 15,
-                                mainAxisSpacing: 10,
-                              ),
-                              itemBuilder: (context, index) {
-                                Product product = snapShot.data![index];
-                                return Card(
-                                  child: Column(
-                                    children: [
-
-                                      Container(
+                            itemCount: snapShot.data!.length,
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2,
+                              crossAxisSpacing: 15,
+                              mainAxisSpacing: 10,
+                            ),
+                            itemBuilder: (context, index) {
+                              Product product = snapShot.data![index];
+                              return Card(
+                                child: Column(
+                                  children: [
+                                    GestureDetector(
+                                      onTap: () {
+                                        Get.toNamed("ItemDetailPage");
+                                      },
+                                      child: Container(
                                         height: 70,
                                         decoration: BoxDecoration(
                                           borderRadius:
@@ -112,74 +135,82 @@ class HomePage extends StatelessWidget {
                                           ),
                                         ),
                                       ),
-
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Expanded(
-                                            flex: 3,
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Text(
-                                                  product.title,
-                                                  style: TextStyle(
-                                                    color: Colors.blue.shade900,
-                                                    fontSize: 10,
-                                                  ),
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Expanded(
+                                          flex: 3,
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                product.title,
+                                                style: TextStyle(
+                                                  color: Colors.blue.shade900,
+                                                  fontSize: 10,
                                                 ),
-                                                Text(
-                                                  product.brand,
-                                                  style: TextStyle(
-                                                    color: Colors.blue,
-                                                    fontSize: 8,
-                                                  ),
+                                              ),
+                                              Text(
+                                                product.brand,
+                                                style: TextStyle(
+                                                  color: Colors.blue,
+                                                  fontSize: 8,
                                                 ),
-                                              ],
-                                            ),
+                                              ),
+                                            ],
                                           ),
-                                          Expanded(child: CircleAvatar(
-                                            backgroundColor: Colors.white,
-
-                                            child: IconButton(
-                                              icon: Icon(Icons.favorite,size: 20,color: Colors.blue.shade900,),
-                                              onPressed: (){},
+                                        ),
+                                        Expanded(
+                                            child: CircleAvatar(
+                                          backgroundColor: Colors.white,
+                                          child: IconButton(
+                                            icon: Icon(
+                                              Icons.favorite,
+                                              size: 20,
+                                              color: Colors.blue.shade900,
                                             ),
-                                          )),
-                                        ],
-                                      ),
-                                      Row(
-                                        mainAxisAlignment: MainAxisAlignment.center,
-                                        crossAxisAlignment: CrossAxisAlignment.center,
-                                        children: [
-                                          Expanded(
-                                            child: Padding(
-                                              padding: const EdgeInsets.only(bottom: 10),
-                                              child: Container(
-                                                height: 30,
-                                                width: 30,
-                                                child: IconButton(
-                                                  onPressed: () {
-                                                    controller.addToCart(
-                                                        product: product);
-                                                  },
-                                                  icon: Icon(
-                                                    Icons.shopping_cart,
-                                                    color: Colors.blue.shade900,
-                                                    size: 30,
-                                                  ),
+                                            onPressed: () {},
+                                          ),
+                                        )),
+                                      ],
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        Expanded(
+                                          child: Padding(
+                                            padding: const EdgeInsets.only(
+                                                bottom: 10),
+                                            child: Container(
+                                              height: 30,
+                                              width: 30,
+                                              child: IconButton(
+                                                onPressed: () {
+                                                  controller.addToCart(
+                                                      product: product);
+                                                },
+                                                icon: Icon(
+                                                  Icons.shopping_cart,
+                                                  color: Colors.blue.shade900,
+                                                  size: 30,
                                                 ),
                                               ),
                                             ),
                                           ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                );
-                              },),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              );
+                            },
+                          ),
                         );
                       } else if (snapShot.hasError) {
                         return Text("error ${snapShot.hasError}");

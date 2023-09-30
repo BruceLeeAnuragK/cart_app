@@ -1,5 +1,6 @@
 import 'package:cart_app/helper/splash_screen_helper.dart';
 import 'package:cart_app/view/screen/cart_page.dart';
+import 'package:cart_app/view/screen/detail_page.dart';
 import 'package:cart_app/view/screen/home_page.dart';
 import 'package:cart_app/view/screen/login_screen.dart';
 import 'package:cart_app/view/screen/splash_screen.dart';
@@ -40,6 +41,10 @@ class MyApp extends StatelessWidget {
         GetPage(
           name: "/CartPage",
           page: () => CartPage(),
+        ),
+        GetPage(
+          name: "/ItemDetailPage",
+          page: () => ItemDetailPage(),
         ),
       ],
     );

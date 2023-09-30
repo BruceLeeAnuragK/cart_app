@@ -37,6 +37,7 @@ dependencies:
   animated_splash_screen:
   google_fonts:
   dynamic_badges:
+  firebase_core:
 
 
 dev_dependencies:

@@ -34,48 +34,61 @@ class CartPage extends StatelessWidget {
             height: 110,
             width: double.infinity,
             decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(10),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey,
-                  offset: Offset(5,5),
-                  blurRadius: 10,
-                  spreadRadius: 5
-                ),
-              ]
-            ),
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(10),
+                boxShadow: [
+                  BoxShadow(
+                      color: Colors.grey,
+                      offset: Offset(5, 5),
+                      blurRadius: 10,
+                      spreadRadius: 5),
+                ]),
             child: Row(
               children: [
-                 Padding(
-                   padding: const EdgeInsets.all(10),
-                   child: CircleAvatar(radius: 30,
-                   foregroundImage: NetworkImage(controller.cartitems[index].thumbnail),
-                   ),
-                 ),
+                Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: CircleAvatar(
+                    radius: 30,
+                    foregroundImage:
+                        NetworkImage(controller.cartitems[index].thumbnail),
+                  ),
+                ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(controller.cartitems[index].brand,style: TextStyle(
-                        color:Colors.blue.shade900,
-
-                      ),),
-                      Text(controller.cartitems[index].category,style: TextStyle(
-                        color:Colors.blue.shade300,
-
-                      ),),
+                      Text(
+                        controller.cartitems[index].brand,
+                        style: TextStyle(
+                          color: Colors.blue.shade900,
+                        ),
+                      ),
+                      Text(
+                        controller.cartitems[index].category,
+                        style: TextStyle(
+                          color: Colors.blue.shade300,
+                        ),
+                      ),
                       Row(
                         children: [
                           IconButton(
-
-                            onPressed: (){}, icon: Icon(Icons.add,color: Colors.white,),
+                            onPressed: () {},
+                            icon: Icon(
+                              Icons.add,
+                              color: Colors.white,
+                            ),
                             color: Colors.blue.shade900,
                           ),
-                          IconButton(color: Colors.blue.shade900,
-                            onPressed: (){}, icon: Icon(Icons.remove,color: Colors.white,),),
+                          IconButton(
+                            color: Colors.blue.shade900,
+                            onPressed: () {},
+                            icon: Icon(
+                              Icons.remove,
+                              color: Colors.white,
+                            ),
+                          ),
                         ],
                       ),
                     ],
