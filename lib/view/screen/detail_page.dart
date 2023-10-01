@@ -7,7 +7,7 @@ class ItemDetailPage extends StatelessWidget {
   ItemDetailPage({Key? key}) : super(key: key);
 
   CartController controller = Get.find();
-
+  int DetailIndex = Get.arguments;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,19 +29,22 @@ class ItemDetailPage extends StatelessWidget {
         ),
       ),
       body: ListView.builder(
-        itemBuilder: (context, index) => Column(
-          children: [
-            Container(
-              height: 70,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                image: DecorationImage(
-                  fit: BoxFit.cover,
-                  image: NetworkImage(controller.cartitems[index].thumbnail),
+        itemBuilder: (context, index) => Obx(
+          () => Column(
+            children: [
+              Container(
+                height: 200,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  image: DecorationImage(
+                    fit: BoxFit.cover,
+                    image: NetworkImage(
+                        controller.cartitems[DetailIndex].thumbnail),
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

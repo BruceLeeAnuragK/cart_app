@@ -1,25 +1,41 @@
+import 'package:cart_app/provider/favController.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:google_fonts/google_fonts.dart';
-
-import '../../provider/cartController.dart';
 
 class FavoiritePage extends StatelessWidget {
   FavoiritePage({super.key});
-  CartController controller = Get.find();
+
+  FavController favController = Get.find();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Item Detail",style: GoogleFonts.sofia(color: Colors.white,),),
+        backgroundColor: Colors.blue.shade900,
+        title: Text(
+          "Item Detail",
+          style: GoogleFonts.sofia(
+            color: Colors.white,
+          ),
+        ),
         centerTitle: true,
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back_ios,
+            color: Colors.white,
+          ),
+          onPressed: () {
+            Get.back();
+          },
+        ),
       ),
-      body:ListView.builder(
+      body: ListView.builder(
         itemBuilder: (context, index) => Card(
           child: ListTile(
             leading: CircleAvatar(
-              foregroundImage: NetworkImage(controller.cartitems[index].thumbnail),
+              foregroundImage:
+                  NetworkImage(favController.favitems[index].thumbnail),
             ),
             trailing: IconButton(
               onPressed: () {},
@@ -28,7 +44,8 @@ class FavoiritePage extends StatelessWidget {
                 color: Colors.blue,
               ),
             ),
-            title: Text("${controller.cartitems[index].brand}\n${controller.cartitems[index].category}"),
+            title: Text(
+                "${favController.favitems[index].brand}\n${favController.favitems[index].category}"),
           ),
         ),
       ),

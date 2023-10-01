@@ -7,6 +7,7 @@ import '../../provider/cartController.dart';
 class CartPage extends StatelessWidget {
   CartPage({Key? key}) : super(key: key);
   CartController controller = Get.find();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

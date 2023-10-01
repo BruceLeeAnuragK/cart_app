@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
-class CartController extends GetxController {
+class FavController extends GetxController {
   RxString username = "".obs;
   RxString email = "".obs;
   RxList<Product> cartitems = <Product>[].obs;
@@ -36,7 +36,6 @@ class CartController extends GetxController {
     favitems.remove(product);
   }
 
-/////
   var searchQuery = ''.obs;
   RxList filteredItems = [].obs;
 
@@ -56,13 +55,6 @@ class CartController extends GetxController {
           .toList();
       filteredItems.assignAll(searchList);
     }
-  }
-
-  ///
-  // Observe changes in the search query
-
-  void setSearchQuery(String query) {
-    searchQuery.value = query;
   }
 // changeOty({required int val, required int index}) {
 //   if (cartitems[index].qty != null) {
