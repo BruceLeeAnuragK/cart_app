@@ -41,6 +41,7 @@ dependencies:
   firebase_storage:
   firebase_auth:
   cloud_firestore:
+  provider:
 
 
 dev_dependencies:

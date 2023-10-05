@@ -30,25 +30,38 @@ class FavoiritePage extends StatelessWidget {
           },
         ),
       ),
-      body: ListView.builder(
-        itemBuilder: (context, index) => Card(
-          child: ListTile(
-            leading: CircleAvatar(
-              foregroundImage:
-                  NetworkImage(favController.favitems[index].thumbnail),
-            ),
-            trailing: IconButton(
-              onPressed: () {},
-              icon: Icon(
-                Icons.delete,
-                color: Colors.blue,
+      body: (favController.favitems != null)
+          ? ListView.builder(
+              itemCount: favController.favitems.length,
+              itemBuilder: (context, index) => Card(
+                child: ListTile(
+                  leading: CircleAvatar(
+                    foregroundImage:
+                        NetworkImage(favController.favitems[index].thumbnail),
+                  ),
+                  trailing: IconButton(
+                    onPressed: () {},
+                    icon: Icon(
+                      Icons.delete,
+                      color: Colors.blue,
+                    ),
+                  ),
+                  title: Text(
+                      "${favController.favitems[index].brand}\n${favController.favitems[index].category}"),
+                ),
               ),
+            )
+          : Column(
+              children: [
+                Text(
+                  "Non Items are Added to the Cart.",
+                  style: TextStyle(
+                    color: Colors.blue.shade900,
+                    fontSize: 30,
+                  ),
+                ),
+              ],
             ),
-            title: Text(
-                "${favController.favitems[index].brand}\n${favController.favitems[index].category}"),
-          ),
-        ),
-      ),
     );
   }
 }

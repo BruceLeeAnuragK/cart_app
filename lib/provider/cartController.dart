@@ -7,7 +7,9 @@ class CartController extends GetxController {
   RxString username = "".obs;
   RxString email = "".obs;
   RxList<Product> cartitems = <Product>[].obs;
+  RxList<Product> addtocart = <Product>[].obs;
   RxList<Product> favitems = <Product>[].obs;
+  RxList<Product> addtofavitems = <Product>[].obs;
   TextEditingController searchController = TextEditingController();
 
   static final storage = GetStorage();
@@ -22,14 +24,17 @@ class CartController extends GetxController {
 
   addToCart({required Product product, required int index}) {
     cartitems.add(product);
+    addtocart.add(cartitems[index]);
   }
 
   addToFavourite({required Product product, required int index}) {
     favitems.add(product);
+    addtofavitems.add(favitems[index]);
   }
 
-  removeFromCart({required Product product}) {
-    cartitems.remove(product);
+  removeFromCart({required Product product, required int index}) {
+    addtofavitems.remove(product);
+    addtofavitems.remove(cartitems[index]);
   }
 
   removeToFavourite({required Product product}) {

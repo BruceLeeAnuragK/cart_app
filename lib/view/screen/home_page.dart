@@ -228,131 +228,130 @@ class HomePage extends StatelessWidget {
                     builder: (context, snapShot) {
                       if (snapShot.hasData) {
                         return Expanded(
-                          child: GetX<CartController>(
-                            builder: (controller) {
-                              // Observe changes in the search query and update the UI
-                              var searchResults = controller.cartitems
-                                  .where((item) => item.brand
-                                      .toLowerCase()
-                                      .contains(controller.searchQuery.value
-                                          .toLowerCase()))
-                                  .toList();
-                              return GridView.builder(
-                                itemCount: snapShot.data!.length,
-                                gridDelegate:
-                                    SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 2,
-                                  crossAxisSpacing: 15,
-                                  mainAxisSpacing: 10,
+                          child: GridView.builder(
+                            itemCount: snapShot.data!.length,
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2,
+                              crossAxisSpacing: 15,
+                              mainAxisSpacing: 10,
+                            ),
+                            itemBuilder: (context, index) {
+                              Product product = snapShot.data![index];
+                              return Container(
+                                height: 500,
+                                width: 200,
+                                decoration: BoxDecoration(
+                                  color: Colors.blue.shade50,
+                                  borderRadius: BorderRadius.circular(20),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.grey,
+                                      offset: Offset(5, 5),
+                                      spreadRadius: 5,
+                                      blurRadius: 5,
+                                    ),
+                                  ],
                                 ),
-                                itemBuilder: (context, index) {
-                                  Product product = snapShot.data![index];
-                                  return Card(
-                                    child: Column(
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    GestureDetector(
+                                      onTap: () {
+                                        Get.toNamed("ItemDetailPage",
+                                            arguments: index);
+                                      },
+                                      child: Container(
+                                        height: 70,
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          image: DecorationImage(
+                                            fit: BoxFit.cover,
+                                            image:
+                                                NetworkImage(product.thumbnail),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
                                       children: [
-                                        GestureDetector(
-                                          onTap: () {
-                                            Get.toNamed("ItemDetailPage",
-                                                arguments: index);
-                                          },
-                                          child: Container(
-                                            height: 70,
-                                            decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
-                                              image: DecorationImage(
-                                                fit: BoxFit.cover,
-                                                image: NetworkImage(
-                                                    product.thumbnail),
+                                        Expanded(
+                                          flex: 3,
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                product.title,
+                                                style: TextStyle(
+                                                  color: Colors.blue.shade900,
+                                                  fontSize: 10,
+                                                ),
+                                              ),
+                                              Text(
+                                                product.brand,
+                                                style: TextStyle(
+                                                  color: Colors.blue,
+                                                  fontSize: 8,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        Expanded(
+                                          child: CircleAvatar(
+                                            backgroundColor: Colors.white,
+                                            child: IconButton(
+                                              icon: Icon(
+                                                Icons.favorite,
+                                                size: 20,
+                                                color: Colors.blue.shade900,
+                                              ),
+                                              onPressed: () {
+                                                favController.addToFavourite(
+                                                    product: product,
+                                                    index: index);
+                                              },
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        Expanded(
+                                          child: Padding(
+                                            padding: const EdgeInsets.only(
+                                                bottom: 10),
+                                            child: Container(
+                                              height: 30,
+                                              width: 30,
+                                              child: IconButton(
+                                                onPressed: () {
+                                                  controller.addToCart(
+                                                      product: product,
+                                                      index: index);
+                                                },
+                                                icon: Icon(
+                                                  Icons.shopping_cart,
+                                                  color: Colors.blue.shade900,
+                                                  size: 30,
+                                                ),
                                               ),
                                             ),
                                           ),
                                         ),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Expanded(
-                                              flex: 3,
-                                              child: Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Text(
-                                                    controller
-                                                        .filteredItems[index]
-                                                        .title,
-                                                    style: TextStyle(
-                                                      color:
-                                                          Colors.blue.shade900,
-                                                      fontSize: 10,
-                                                    ),
-                                                  ),
-                                                  Text(
-                                                    controller
-                                                        .filteredItems[index]
-                                                        .brand,
-                                                    style: TextStyle(
-                                                      color: Colors.blue,
-                                                      fontSize: 8,
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                            Expanded(
-                                                child: CircleAvatar(
-                                              backgroundColor: Colors.white,
-                                              child: IconButton(
-                                                icon: Icon(
-                                                  Icons.favorite,
-                                                  size: 20,
-                                                  color: Colors.blue.shade900,
-                                                ),
-                                                onPressed: () {
-                                                  favController.addToFavourite(
-                                                      product: product,
-                                                      index: index);
-                                                },
-                                              ),
-                                            )),
-                                          ],
-                                        ),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          children: [
-                                            Expanded(
-                                              child: Padding(
-                                                padding: const EdgeInsets.only(
-                                                    bottom: 10),
-                                                child: Container(
-                                                  height: 30,
-                                                  width: 30,
-                                                  child: IconButton(
-                                                    onPressed: () {
-                                                      controller.addToCart(
-                                                          product: product,
-                                                          index: index);
-                                                    },
-                                                    icon: Icon(
-                                                      Icons.shopping_cart,
-                                                      color:
-                                                          Colors.blue.shade900,
-                                                      size: 30,
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
                                       ],
                                     ),
-                                  );
-                                },
+                                  ],
+                                ),
                               );
                             },
                           ),
