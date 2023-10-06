@@ -32,9 +32,9 @@ class CartPage extends StatelessWidget {
         ),
       ),
       body: ListView.builder(
-        itemCount: controller.cartitems.length,
+        itemCount: controller.favitems.length,
         itemBuilder: (context, index) {
-          Product product = controller.cartitems[index];
+          Product product = controller.favitems[index];
           return Padding(
             padding: const EdgeInsets.all(5),
             child: Container(
@@ -58,7 +58,7 @@ class CartPage extends StatelessWidget {
                     child: CircleAvatar(
                       radius: 30,
                       foregroundImage:
-                          NetworkImage(controller.cartitems[index].thumbnail),
+                          NetworkImage(controller.favitems[index].thumbnail),
                     ),
                   ),
                   Padding(
@@ -68,33 +68,53 @@ class CartPage extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          controller.cartitems[index].brand,
+                          controller.favitems[index].brand,
                           style: TextStyle(
                             color: Colors.blue.shade900,
                           ),
                         ),
                         Text(
-                          controller.cartitems[index].category,
+                          controller.favitems[index].category,
                           style: TextStyle(
                             color: Colors.blue.shade300,
                           ),
                         ),
                         Row(
                           children: [
-                            IconButton(
-                              onPressed: () {},
-                              icon: Icon(
-                                Icons.add,
-                                color: Colors.white,
-                              ),
+                            Container(
+                              height: 25,
+                              width: 25,
                               color: Colors.blue.shade900,
+                              alignment: Alignment.center,
+                              child: IconButton(
+                                  iconSize: 10,
+                                  onPressed: () {},
+                                  icon: Icon(
+                                    Icons.add,
+                                  ),
+                                  color: Colors.white),
                             ),
-                            IconButton(
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Container(
+                                child: Text(
+                                  "0",
+                                  style: TextStyle(color: Colors.blue.shade300),
+                                ),
+                              ),
+                            ),
+                            Container(
+                              height: 25,
+                              width: 25,
                               color: Colors.blue.shade900,
-                              onPressed: () {},
-                              icon: Icon(
-                                Icons.remove,
+                              margin: EdgeInsets.all(5.0),
+                              child: IconButton(
+                                iconSize: 10,
                                 color: Colors.white,
+                                onPressed: () {},
+                                icon: Icon(
+                                  Icons.remove,
+                                ),
                               ),
                             ),
                           ],
@@ -132,8 +152,15 @@ class CartPage extends StatelessWidget {
                             width: 30,
                             child: IconButton(
                               onPressed: () {
-                                controller.removeFromCart(
+                                bool remove = controller.removeFromCart(
                                     product: product, index: index);
+                                if (remove) {
+                                  Get.snackbar("Sucessfully",
+                                      "Your Cart Item is Removed");
+                                } else {
+                                  Get.snackbar("Unsuccessfully",
+                                      "Your Cart Item is NOT Removed");
+                                }
                               },
                               icon: Icon(
                                 Icons.delete,

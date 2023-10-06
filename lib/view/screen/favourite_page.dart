@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../model/cart_model.dart';
+
 class FavoiritePage extends StatelessWidget {
   FavoiritePage({super.key});
 
@@ -14,7 +16,7 @@ class FavoiritePage extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.blue.shade900,
         title: Text(
-          "Item Detail",
+          "Favourite",
           style: GoogleFonts.sofia(
             color: Colors.white,
           ),
@@ -33,24 +35,28 @@ class FavoiritePage extends StatelessWidget {
       body: (favController.favitems != null)
           ? ListView.builder(
               itemCount: favController.favitems.length,
-              itemBuilder: (context, index) => Card(
-                child: ListTile(
-                  leading: CircleAvatar(
-                    foregroundImage:
-                        NetworkImage(favController.favitems[index].thumbnail),
-                  ),
-                  trailing: IconButton(
-                    onPressed: () {},
-                    icon: Icon(
-                      Icons.delete,
-                      color: Colors.blue,
+              itemBuilder: (context, index) {
+                Product product = favController.cartitems[index];
+                return Card(
+                  child: ListTile(
+                    leading: CircleAvatar(
+                      foregroundImage:
+                          NetworkImage(favController.favitems[index].thumbnail),
                     ),
+                    trailing: IconButton(
+                      onPressed: () {
+                        favController.removeFromCart(product: product);
+                      },
+                      icon: Icon(
+                        Icons.delete,
+                        color: Colors.blue.shade900,
+                      ),
+                    ),
+                    title: Text(
+                        "${favController.favitems[index].brand}\n${favController.favitems[index].category}"),
                   ),
-                  title: Text(
-                      "${favController.favitems[index].brand}\n${favController.favitems[index].category}"),
-                ),
-              ),
-            )
+                );
+              })
           : Column(
               children: [
                 Text(

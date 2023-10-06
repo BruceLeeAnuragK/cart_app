@@ -28,7 +28,7 @@ class HomePage extends StatelessWidget {
                   onPressed: () {
                     Get.toNamed("/CartPage");
                   },
-                  icon: Icon(
+                  icon: const Icon(
                     Icons.person_4_rounded,
                     color: Colors.white,
                     size: 20,
@@ -41,7 +41,7 @@ class HomePage extends StatelessWidget {
                   onPressed: () {
                     Get.toNamed("/FavoiritePage");
                   },
-                  icon: Icon(
+                  icon: const Icon(
                     Icons.favorite_outlined,
                     color: Colors.white,
                     size: 20,
@@ -57,7 +57,7 @@ class HomePage extends StatelessWidget {
                       onPressed: () {
                         Get.toNamed("/CartPage");
                       },
-                      icon: Icon(
+                      icon: const Icon(
                         Icons.shopping_cart_rounded,
                         color: Colors.white,
                         size: 20,
@@ -68,7 +68,7 @@ class HomePage extends StatelessWidget {
               ),
             ],
             leading: IconButton(
-              icon: Icon(
+              icon: const Icon(
                 Icons.arrow_back_ios_new_sharp,
                 color: Colors.white,
               ),
@@ -163,7 +163,7 @@ class HomePage extends StatelessWidget {
                           ),
                         ],
                       ),
-                      Spacer(),
+                      const Spacer(),
                       Column(
                         children: [
                           Row(
@@ -231,20 +231,19 @@ class HomePage extends StatelessWidget {
                           child: GridView.builder(
                             itemCount: snapShot.data!.length,
                             gridDelegate:
-                                SliverGridDelegateWithFixedCrossAxisCount(
+                                const SliverGridDelegateWithFixedCrossAxisCount(
                               crossAxisCount: 2,
                               crossAxisSpacing: 15,
                               mainAxisSpacing: 10,
+                              childAspectRatio: 2 / 2.1,
                             ),
                             itemBuilder: (context, index) {
                               Product product = snapShot.data![index];
                               return Container(
-                                height: 500,
-                                width: 200,
                                 decoration: BoxDecoration(
                                   color: Colors.blue.shade50,
                                   borderRadius: BorderRadius.circular(20),
-                                  boxShadow: [
+                                  boxShadow: const [
                                     BoxShadow(
                                       color: Colors.grey,
                                       offset: Offset(5, 5),
@@ -293,7 +292,7 @@ class HomePage extends StatelessWidget {
                                               ),
                                               Text(
                                                 product.brand,
-                                                style: TextStyle(
+                                                style: const TextStyle(
                                                   color: Colors.blue,
                                                   fontSize: 8,
                                                 ),
@@ -330,7 +329,7 @@ class HomePage extends StatelessWidget {
                                           child: Padding(
                                             padding: const EdgeInsets.only(
                                                 bottom: 10),
-                                            child: Container(
+                                            child: SizedBox(
                                               height: 30,
                                               width: 30,
                                               child: IconButton(
