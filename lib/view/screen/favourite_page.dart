@@ -1,3 +1,4 @@
+import 'package:cart_app/provider/cartController.dart';
 import 'package:cart_app/provider/favController.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -9,6 +10,7 @@ class FavoiritePage extends StatelessWidget {
   FavoiritePage({super.key});
 
   FavController favController = Get.find();
+  CartController cartController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -32,20 +34,20 @@ class FavoiritePage extends StatelessWidget {
           },
         ),
       ),
-      body: (favController.favitems != null)
+      body: (cartController.addtofavitems.isNotEmpty)
           ? ListView.builder(
-              itemCount: favController.favitems.length,
+              itemCount: cartController.addtofavitems.length,
               itemBuilder: (context, index) {
-                Product product = favController.cartitems[index];
+                Product product = cartController.addtofavitems[index];
                 return Card(
                   child: ListTile(
                     leading: CircleAvatar(
-                      foregroundImage:
-                          NetworkImage(favController.favitems[index].thumbnail),
+                      foregroundImage: NetworkImage(
+                          cartController.addtofavitems[index].thumbnail),
                     ),
                     trailing: IconButton(
                       onPressed: () {
-                        favController.removeFromCart(product: product);
+                        cartController.removeToFavourite(product: product);
                       },
                       icon: Icon(
                         Icons.delete,
@@ -53,17 +55,20 @@ class FavoiritePage extends StatelessWidget {
                       ),
                     ),
                     title: Text(
-                        "${favController.favitems[index].brand}\n${favController.favitems[index].category}"),
+                        "${cartController.addtofavitems[index].brand}\n${cartController.addtofavitems[index].category}"),
                   ),
                 );
-              })
+              },
+            )
           : Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
-                  "Non Items are Added to the Cart.",
-                  style: TextStyle(
+                  "Non Items are Added to the Favourite.",
+                  style: GoogleFonts.sofia(
                     color: Colors.blue.shade900,
-                    fontSize: 30,
+                    fontSize: 20,
                   ),
                 ),
               ],

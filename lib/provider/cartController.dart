@@ -22,23 +22,38 @@ class CartController extends GetxController {
     storage.write("email", email.value);
   }
 
-  addToCart({required Product product, required int index}) {
-    cartitems.add(product);
-    addtocart.add(cartitems[index]);
+  addToCart({required Product product}) {
+    // cartitems.add(product);
+    // addtocart.add(cartitems[index]);
+    cartitems.add(product); // Add product directly to cartitems list
+    addtocart
+        .assignAll(cartitems); // Update addtocart with all items in cartitems
+    update();
+
+    update();
   }
 
-  addToFavourite({required Product product, required int index}) {
-    favitems.add(product);
-    addtofavitems.add(favitems[index]);
+  addToFavourite({required Product product}) {
+    favitems.add(product); // Add product directly to cartitems list
+    addtofavitems
+        .assignAll(favitems); // Update addtocart with all items in cartitems
+    update();
+    update();
   }
 
-  removeFromCart({required Product product, required int index}) {
-    addtofavitems.remove(product);
-    addtofavitems.remove(cartitems[index]);
+  removeFromCart({required Product product}) {
+    cartitems.remove(product); // Remove product directly from cartitems list
+    addtocart.assignAll(cartitems); // Update addtocart with updated cartitems
+    update();
+    update();
   }
 
   removeToFavourite({required Product product}) {
-    favitems.remove(product);
+    favitems.remove(product); // Remove product directly from cartitems list
+    addtofavitems
+        .assignAll(favitems); // Update addtocart with updated cartitems
+    update();
+    update();
   }
 
 /////
@@ -48,11 +63,13 @@ class CartController extends GetxController {
   void updateSearchQuery(String query) {
     searchQuery.value = query;
     filterSearchResults();
+    update();
   }
 
   void filterSearchResults() {
     if (searchQuery.isEmpty) {
       filteredItems.assignAll(cartitems);
+      update();
     } else {
       var searchList = cartitems
           .where((item) => item.brand
@@ -60,7 +77,41 @@ class CartController extends GetxController {
               .contains(searchQuery.value.toLowerCase()))
           .toList();
       filteredItems.assignAll(searchList);
+      update();
     }
+  }
+
+  // Rx variable to store the sorting criteria
+  RxString sortBy = ''.obs;
+
+  // Function to update the sorting criteria
+  void setSortBy(String criteria) {
+    sortBy.value = criteria;
+    update();
+  }
+
+  // Sort cart items by category in ascending order
+  void sortCartByCategoryAscending() {
+    cartitems.sort((a, b) => a.category.compareTo(b.category));
+    update();
+  }
+
+  // Sort cart items by category in descending order
+  void sortCartByCategoryDescending() {
+    cartitems.sort((a, b) => b.category.compareTo(a.category));
+    update();
+  }
+
+  // Sort cart items by brand in ascending order
+  void sortCartByBrandAscending() {
+    cartitems.sort((a, b) => a.title.compareTo(b.brand));
+    update();
+  }
+
+  // Sort cart items by brand in descending order
+  void sortCartByBrandDescending() {
+    cartitems.sort((a, b) => b.title.compareTo(a.brand));
+    update();
   }
 
   ///
@@ -68,6 +119,7 @@ class CartController extends GetxController {
 
   void setSearchQuery(String query) {
     searchQuery.value = query;
+    update();
   }
 // changeOty({required int val, required int index}) {
 //   if (cartitems[index].qty != null) {

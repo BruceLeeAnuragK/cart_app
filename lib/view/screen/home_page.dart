@@ -126,9 +126,7 @@ class HomePage extends StatelessWidget {
                                 padding: const EdgeInsets.all(8.5),
                                 child: ElevatedButton(
                                   onPressed: () {
-                                    controller.cartitems.sort((a, b) {
-                                      return a.title.compareTo(b.title);
-                                    });
+                                    controller.sortCartByBrandAscending();
                                   },
                                   child: Text(
                                     "A-Z",
@@ -142,9 +140,7 @@ class HomePage extends StatelessWidget {
                                 padding: const EdgeInsets.all(5.0),
                                 child: ElevatedButton(
                                   onPressed: () {
-                                    controller.cartitems.sort((a, b) {
-                                      return b.title.compareTo(a.title);
-                                    });
+                                    controller.sortCartByBrandDescending();
                                   },
                                   child: Text(
                                     "Z-A",
@@ -177,10 +173,8 @@ class HomePage extends StatelessWidget {
                                         padding: const EdgeInsets.all(5.0),
                                         child: ElevatedButton(
                                           onPressed: () {
-                                            controller.cartitems.sort((a, b) {
-                                              return a.category
-                                                  .compareTo(b.category);
-                                            });
+                                            controller
+                                                .sortCartByCategoryAscending();
                                           },
                                           child: Text(
                                             "A-Z",
@@ -194,10 +188,8 @@ class HomePage extends StatelessWidget {
                                         padding: const EdgeInsets.all(5.0),
                                         child: ElevatedButton(
                                           onPressed: () {
-                                            controller.cartitems.sort((a, b) {
-                                              return b.category
-                                                  .compareTo(a.category);
-                                            });
+                                            controller
+                                                .sortCartByCategoryDescending();
                                           },
                                           child: Text(
                                             "Z-A",
@@ -227,7 +219,31 @@ class HomePage extends StatelessWidget {
                     future: APIHelper.apiHelper.getData(),
                     builder: (context, snapShot) {
                       if (snapShot.hasData) {
-                        return Expanded(
+                        // Filter and sort the data before passing it to Obx
+                        List<Product> filteredItems = snapShot.data!
+                            .where((item) => item.brand.toLowerCase().contains(
+                                controller.searchQuery.value.toLowerCase()))
+                            .toList();
+
+                        // Sort the filtered items based on the sorting criteria
+                        filteredItems.sort((a, b) {
+                          if (controller.sortBy.value == 'brand') {
+                            return a.brand.compareTo(b.brand);
+                          } else if (controller.sortBy.value == 'category') {
+                            return a.category.compareTo(b.category);
+                          }
+                          return 0;
+                        });
+                        return
+                            // if (controller.isSortByCategoryAscending.value) {
+                            //   controller.cartitems.sort(
+                            //       (a, b) => a.category.compareTo(b.category));
+                            // } else {
+                            //   controller.cartitems.sort(
+                            //       (a, b) => b.category.compareTo(a.category));
+                            // }
+
+                            Expanded(
                           child: GridView.builder(
                             itemCount: snapShot.data!.length,
                             gridDelegate:
@@ -310,9 +326,8 @@ class HomePage extends StatelessWidget {
                                                 color: Colors.blue.shade900,
                                               ),
                                               onPressed: () {
-                                                favController.addToFavourite(
-                                                    product: product,
-                                                    index: index);
+                                                controller.addToFavourite(
+                                                    product: product);
                                               },
                                             ),
                                           ),
@@ -334,9 +349,12 @@ class HomePage extends StatelessWidget {
                                               width: 30,
                                               child: IconButton(
                                                 onPressed: () {
+                                                  print(
+                                                      "Index before addToCart: $index");
+
                                                   controller.addToCart(
-                                                      product: product,
-                                                      index: index);
+                                                    product: product,
+                                                  );
                                                 },
                                                 icon: Icon(
                                                   Icons.shopping_cart,

@@ -1,4 +1,6 @@
 import 'package:cart_app/helper/splash_screen_helper.dart';
+import 'package:cart_app/provider/cartController.dart';
+import 'package:cart_app/provider/favController.dart';
 import 'package:cart_app/view/screen/cart_page.dart';
 import 'package:cart_app/view/screen/detail_page.dart';
 import 'package:cart_app/view/screen/favourite_page.dart';
