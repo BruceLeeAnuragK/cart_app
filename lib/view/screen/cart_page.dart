@@ -140,8 +140,8 @@ class CartPage extends StatelessWidget {
                                       color: Colors.blue.shade900,
                                     ),
                                     onPressed: () {
-                                      favController.addToFavourite(
-                                          product: product, index: index);
+                                      controller.addToFavourite(
+                                          product: product);
                                     },
                                   ),
                                 ),
