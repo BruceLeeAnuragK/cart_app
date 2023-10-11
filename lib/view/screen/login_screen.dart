@@ -1,13 +1,13 @@
-import 'package:cart_app/provider/cartController.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../helper/firestore_helper.dart';
 import '../../model/user_model.dart';
+import '../../provider/loginController.dart';
 
 class LogIn extends StatelessWidget {
   LogIn({Key? key}) : super(key: key);
-  CartController controller = Get.put(CartController());
+  LoginController controller = Get.put(LoginController());
   final usernameController = TextEditingController();
   final emailController = TextEditingController();
 
@@ -180,9 +180,9 @@ class LogIn extends StatelessWidget {
                   //   () => Text("last : ${controller.email.value}"),
                   // ),
                   Text(
-                      "User Name : ${CartController.storage.read("userName") ?? ""}"),
+                      "User Name : ${LoginController.storage.read("userName") ?? ""}"),
                   Text(
-                      " Email : ${CartController.storage.read("email") ?? ""}"),
+                      " Email : ${LoginController.storage.read("email") ?? ""}"),
                 ],
               ),
             ),

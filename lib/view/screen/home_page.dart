@@ -4,13 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../../helper/api_helper.dart';
 import '../../provider/cartController.dart';
+import '../../provider/productController.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({Key? key}) : super(key: key);
-  CartController controller = Get.put(CartController());
+  ProductController controller = Get.put(ProductController());
   FavController favController = Get.put(FavController());
+  CartController cartController = Get.put(CartController());
   TextEditingController searchController = TextEditingController();
 
   void filterSearchResults() {}
@@ -52,7 +53,7 @@ class HomePage extends StatelessWidget {
                 padding: const EdgeInsets.all(1),
                 child: Obx(() {
                   return Badge(
-                    label: Text("${controller.cartitems.length}"),
+                    label: Text("${controller.productItems.length}"),
                     child: IconButton(
                       onPressed: () {
                         Get.toNamed("/CartPage");
@@ -215,175 +216,161 @@ class HomePage extends StatelessWidget {
                       ),
                     ],
                   ),
-                  FutureBuilder(
-                    future: APIHelper.apiHelper.getData(),
-                    builder: (context, snapShot) {
-                      if (snapShot.hasData) {
-                        // Filter and sort the data before passing it to Obx
-                        List<Product> filteredItems = snapShot.data!
-                            .where((item) => item.brand.toLowerCase().contains(
-                                controller.searchQuery.value.toLowerCase()))
-                            .toList();
-
-                        // Sort the filtered items based on the sorting criteria
-                        filteredItems.sort((a, b) {
-                          if (controller.sortBy.value == 'brand') {
-                            return a.brand.compareTo(b.brand);
-                          } else if (controller.sortBy.value == 'category') {
-                            return a.category.compareTo(b.category);
-                          }
-                          return 0;
-                        });
-                        return
-                            // if (controller.isSortByCategoryAscending.value) {
-                            //   controller.cartitems.sort(
-                            //       (a, b) => a.category.compareTo(b.category));
-                            // } else {
-                            //   controller.cartitems.sort(
-                            //       (a, b) => b.category.compareTo(a.category));
-                            // }
-
-                            Expanded(
-                          child: GridView.builder(
-                            itemCount: snapShot.data!.length,
-                            gridDelegate:
-                                const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 2,
-                              crossAxisSpacing: 15,
-                              mainAxisSpacing: 10,
-                              childAspectRatio: 2 / 2.1,
-                            ),
-                            itemBuilder: (context, index) {
-                              Product product = snapShot.data![index];
-                              return Container(
-                                decoration: BoxDecoration(
-                                  color: Colors.blue.shade50,
-                                  borderRadius: BorderRadius.circular(20),
-                                  boxShadow: const [
-                                    BoxShadow(
-                                      color: Colors.grey,
-                                      offset: Offset(5, 5),
-                                      spreadRadius: 5,
-                                      blurRadius: 5,
-                                    ),
-                                  ],
-                                ),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    GestureDetector(
-                                      onTap: () {
-                                        Get.toNamed("ItemDetailPage",
-                                            arguments: index);
-                                      },
-                                      child: Container(
-                                        height: 70,
-                                        decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                          image: DecorationImage(
-                                            fit: BoxFit.cover,
-                                            image:
-                                                NetworkImage(product.thumbnail),
+                  Obx(
+                    () => controller.productItems.isNotEmpty
+                        ? Expanded(
+                            child: GridView.builder(
+                              itemCount: controller.productItems.length,
+                              gridDelegate:
+                                  const SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 2,
+                                crossAxisSpacing: 15,
+                                mainAxisSpacing: 10,
+                                childAspectRatio: 2 / 2.1,
+                              ),
+                              itemBuilder: (context, index) {
+                                Product product =
+                                    controller.productItems[index];
+                                return Container(
+                                  decoration: BoxDecoration(
+                                    color: Colors.blue.shade50,
+                                    borderRadius: BorderRadius.circular(20),
+                                    boxShadow: const [
+                                      BoxShadow(
+                                        color: Colors.grey,
+                                        offset: Offset(5, 5),
+                                        spreadRadius: 5,
+                                        blurRadius: 5,
+                                      ),
+                                    ],
+                                  ),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      GestureDetector(
+                                        onTap: () {
+                                          Get.toNamed("ItemDetailPage",
+                                              arguments: index);
+                                        },
+                                        child: Container(
+                                          height: 70,
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                            image: DecorationImage(
+                                              fit: BoxFit.cover,
+                                              image: NetworkImage(
+                                                  product.thumbnail),
+                                            ),
                                           ),
                                         ),
                                       ),
-                                    ),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Expanded(
-                                          flex: 3,
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                product.title,
-                                                style: TextStyle(
-                                                  color: Colors.blue.shade900,
-                                                  fontSize: 10,
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Expanded(
+                                            flex: 3,
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  product.title,
+                                                  style: TextStyle(
+                                                    color: Colors.blue.shade900,
+                                                    fontSize: 10,
+                                                  ),
                                                 ),
-                                              ),
-                                              Text(
-                                                product.brand,
-                                                style: const TextStyle(
-                                                  color: Colors.blue,
-                                                  fontSize: 8,
+                                                Text(
+                                                  product.brand,
+                                                  style: const TextStyle(
+                                                    color: Colors.blue,
+                                                    fontSize: 8,
+                                                  ),
                                                 ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                        Expanded(
-                                          child: CircleAvatar(
-                                            backgroundColor: Colors.white,
-                                            child: IconButton(
-                                              icon: Icon(
-                                                Icons.favorite,
-                                                size: 20,
-                                                color: Colors.blue.shade900,
-                                              ),
-                                              onPressed: () {
-                                                controller.addToFavourite(
-                                                    product: product);
-                                              },
+                                              ],
                                             ),
                                           ),
-                                        ),
-                                      ],
-                                    ),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        Expanded(
-                                          child: Padding(
-                                            padding: const EdgeInsets.only(
-                                                bottom: 10),
-                                            child: SizedBox(
-                                              height: 30,
-                                              width: 30,
+                                          Expanded(
+                                            child: CircleAvatar(
+                                              backgroundColor: Colors.white,
                                               child: IconButton(
-                                                onPressed: () {
-                                                  print(
-                                                      "Index before addToCart: $index");
-
-                                                  controller.addToCart(
-                                                    product: product,
-                                                  );
-                                                },
                                                 icon: Icon(
-                                                  Icons.shopping_cart,
+                                                  Icons.favorite,
+                                                  size: 20,
                                                   color: Colors.blue.shade900,
-                                                  size: 30,
+                                                ),
+                                                onPressed: () {
+                                                  favController.addToFavourite(
+                                                      product: product);
+                                                },
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          Expanded(
+                                            child: Padding(
+                                              padding: const EdgeInsets.only(
+                                                  bottom: 10),
+                                              child: SizedBox(
+                                                height: 30,
+                                                width: 30,
+                                                child: IconButton(
+                                                  onPressed: () {
+                                                    print(
+                                                        "Index before addToCart: $index");
+                                                    cartController.addToCart(
+                                                        product: product);
+                                                  },
+                                                  icon: Icon(
+                                                    Icons.shopping_cart,
+                                                    color: Colors.blue.shade900,
+                                                    size: 30,
+                                                  ),
                                                 ),
                                               ),
                                             ),
                                           ),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              );
-                            },
-                          ),
-                        );
-                      } else if (snapShot.hasError) {
-                        return Text("error ${snapShot.hasError}");
-                      } else {
-                        return Center(
-                          child: CircularProgressIndicator(
-                            color: Colors.blue.shade900,
-                          ),
-                        );
-                      }
-                    },
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              },
+                            ),
+                          )
+                        : const CircularProgressIndicator(),
                   ),
+                  // FutureBuilder(
+                  //   future: APIHelper.apiHelper.getData(),
+                  //   builder: (context, snapShot) {
+                  //     if (snapShot.hasData) {
+                  //       // Filter and sort the data before passing it to Obx
+                  //       List<Product> filteredItems = snapShot.data!
+                  //           .where((item) => item.brand.toLowerCase().contains(
+                  //               controller.searchQuery.value.toLowerCase()))
+                  //           .toList();
+                  //
+                  //       return
+                  //     } else if (snapShot.hasError) {
+                  //       return Text("error ${snapShot.hasError}");
+                  //     } else {
+                  //       return Center(
+                  //         child: CircularProgressIndicator(
+                  //           color: Colors.blue.shade900,
+                  //         ),
+                  //       );
+                  //     }
+                  //   },
+                  // ),
                 ],
               ),
             ),

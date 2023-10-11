@@ -1,13 +1,16 @@
-import 'package:cart_app/provider/cartController.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../provider/cartController.dart';
+import '../../provider/productController.dart';
+
 class ItemDetailPage extends StatelessWidget {
   ItemDetailPage({Key? key}) : super(key: key);
 
-  CartController controller = Get.find();
+  ProductController controller = Get.find();
   int DetailIndex = Get.arguments;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,7 +42,7 @@ class ItemDetailPage extends StatelessWidget {
                   image: DecorationImage(
                     fit: BoxFit.cover,
                     image: NetworkImage(
-                        controller.cartitems[DetailIndex].thumbnail),
+                        controller.productItems[DetailIndex].thumbnail),
                   ),
                 ),
               ),

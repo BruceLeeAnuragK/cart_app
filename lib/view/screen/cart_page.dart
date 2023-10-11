@@ -31,11 +31,11 @@ class CartPage extends StatelessWidget {
           },
         ),
       ),
-      body: (controller.addtocart.isNotEmpty)
+      body: (controller.cartitems.isNotEmpty)
           ? ListView.builder(
-              itemCount: controller.addtocart.length,
+              itemCount: controller.cartitems.length,
               itemBuilder: (context, index) {
-                Product product = controller.addtocart[index];
+                Product product = controller.cartitems[index];
                 return Padding(
                   padding: const EdgeInsets.all(5),
                   child: Container(
@@ -59,7 +59,7 @@ class CartPage extends StatelessWidget {
                           child: CircleAvatar(
                             radius: 30,
                             foregroundImage: NetworkImage(
-                                controller.addtocart[index].thumbnail),
+                                controller.cartitems[index].thumbnail),
                           ),
                         ),
                         Padding(
@@ -69,13 +69,13 @@ class CartPage extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                controller.addtocart[index].brand,
+                                controller.cartitems[index].brand,
                                 style: TextStyle(
                                   color: Colors.blue.shade900,
                                 ),
                               ),
                               Text(
-                                controller.addtocart[index].category,
+                                controller.cartitems[index].category,
                                 style: TextStyle(
                                   color: Colors.blue.shade300,
                                 ),
@@ -140,7 +140,7 @@ class CartPage extends StatelessWidget {
                                       color: Colors.blue.shade900,
                                     ),
                                     onPressed: () {
-                                      controller.addToFavourite(
+                                      favController.addToFavourite(
                                           product: product);
                                     },
                                   ),

@@ -10,7 +10,6 @@ class FavoiritePage extends StatelessWidget {
   FavoiritePage({super.key});
 
   FavController favController = Get.find();
-  CartController cartController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -34,20 +33,20 @@ class FavoiritePage extends StatelessWidget {
           },
         ),
       ),
-      body: (cartController.addtofavitems.isNotEmpty)
+      body: (favController.favitems.isNotEmpty)
           ? ListView.builder(
-              itemCount: cartController.addtofavitems.length,
+              itemCount: favController.favitems.length,
               itemBuilder: (context, index) {
-                Product product = cartController.addtofavitems[index];
+                Product product = favController.favitems[index];
                 return Card(
                   child: ListTile(
                     leading: CircleAvatar(
-                      foregroundImage: NetworkImage(
-                          cartController.addtofavitems[index].thumbnail),
+                      foregroundImage:
+                          NetworkImage(favController.favitems[index].thumbnail),
                     ),
                     trailing: IconButton(
                       onPressed: () {
-                        cartController.removeToFavourite(product: product);
+                        favController.removeToFavourite(product: product);
                       },
                       icon: Icon(
                         Icons.delete,
@@ -55,7 +54,7 @@ class FavoiritePage extends StatelessWidget {
                       ),
                     ),
                     title: Text(
-                        "${cartController.addtofavitems[index].brand}\n${cartController.addtofavitems[index].category}"),
+                        "${favController.favitems[index].brand}\n${favController.favitems[index].category}"),
                   ),
                 );
               },
