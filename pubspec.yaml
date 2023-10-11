@@ -42,6 +42,7 @@ dependencies:
   firebase_auth:
   cloud_firestore:
   provider:
+  rxdart:
 
 
 dev_dependencies:

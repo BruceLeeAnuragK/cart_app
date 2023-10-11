@@ -21,10 +21,18 @@ class MyProfilePage extends StatelessWidget {
         backgroundColor: Colors.blue.shade900,
         leading: IconButton(
           onPressed: () {
-            Get.find();
+            Get.back();
           },
           icon: Icon(Icons.arrow_back_ios),
         ),
+      ),
+      body: Column(
+        children: [
+          CircleAvatar(
+            backgroundColor: Colors.blue.shade900,
+            radius: 40,
+          ),
+        ],
       ),
     );
   }

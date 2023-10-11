@@ -1,3 +1,4 @@
+import 'package:cart_app/helper/api_helper.dart';
 import 'package:cart_app/model/cart_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -104,13 +105,13 @@ class CartController extends GetxController {
 
   // Sort cart items by brand in ascending order
   void sortCartByBrandAscending() {
-    cartitems.sort((a, b) => a.title.compareTo(b.brand));
+    cartitems.sort((a, b) => a.title.compareTo(b.title));
     update();
   }
 
   // Sort cart items by brand in descending order
   void sortCartByBrandDescending() {
-    cartitems.sort((a, b) => b.title.compareTo(a.brand));
+    cartitems.sort((a, b) => b.title.compareTo(a.title));
     update();
   }
 
