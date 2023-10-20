@@ -6,7 +6,7 @@ class APIHelper {
   APIHelper._();
 
   static final APIHelper apiHelper = APIHelper._();
-  String api = "https://dummyjson.com/products?limit=10";
+  String api = "https://dummyjson.com/products?limit=100";
 
   Dio dio = Dio();
 
